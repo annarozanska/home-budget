@@ -183,12 +183,11 @@ const deleteOrEditPopup = (e) => {
 	if (e.target.matches('.cancel')) {
 		popup.style.display = 'none';
 	} else if (e.target.matches('.accept')) {
-
-		for(let el of BUDGET) {
+		for (let el of BUDGET) {
 			let text = popupInputText.value;
 			let number = popupInputNumber.value;
 			let index = el.id;
-            let type = el.type
+			let type = el.type;
 			console.log(index);
 
 			if (text !== BUDGET[index].title || number !== BUDGET[index].amount) {
@@ -210,8 +209,10 @@ const deleteOrEditPopup = (e) => {
 
 				paragraf.innerHTML = changePar;
 			}
-            console.log(BUDGET)
-		};
+			console.log(BUDGET);
+			// console.log(todoListIncome);
+			// console.log(todoListExpense);
+		}
 
 		updateSum();
 		popup.style.display = 'none';
