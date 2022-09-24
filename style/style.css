@@ -1,0 +1,283 @@
+*,
+*:after,
+*:before {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+:root {
+	--blue: #212353;
+	--lightblue: #4b5d68;
+	--superlightblue: #09c6f9;
+	--green: #18c058;
+	--white: #fff;
+}
+
+html,
+body {
+	font-size: 10px;
+	height: 100vh;
+}
+
+.container {
+	width: 94%;
+	height: max-content;
+	margin: 0 auto;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.todo {
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+	justify-content: center;
+	height: 95%;
+}
+
+.todo-headline {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	width: 94%;
+	height: 12em;
+	margin: 0.5rem 0 0.5rem 0.5rem;
+}
+
+.todo-headline h1 {
+	font-size: 2.5rem;
+	text-transform: uppercase;
+	color: var(--blue);
+}
+
+.todo-headline p {
+	margin: 15px 0;
+	font-size: 1.8rem;
+	color: var(--lightblue);
+}
+
+.todo-item {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 94%;
+	background: var(--white);
+	border-radius: 5px;
+	margin: 0.5rem 0 0.5rem 0.5rem;
+}
+
+.todo-header {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	min-width: 85vw;
+	height: max-content;
+	border-radius: 5px 5px 0 0;
+	box-shadow: 4px 0px 5px rgba(82, 82, 82, 0.4);
+	background: var(--superlightblue);
+	padding: 20px;
+}
+
+.add {
+	background: var(--green);
+}
+
+.todo-header > h2 {
+	font-size: 2rem;
+	margin-bottom: 5px;
+	color: var(--blue);
+}
+
+.todo-input-name-expense,
+.todo-input-number-expense,
+.todo-input-name-income,
+.todo-input-number-income {
+	width: 80%;
+	padding: 10px 20px;
+	margin: 5px;
+	border: none;
+	border-radius: 5px;
+	color: var(--blue);
+	background-color: var(--white);
+}
+
+.error-info {
+	margin-top: 20px;
+	color: var(--blue);
+}
+
+.btn-add-income,
+.btn-add-expense {
+	padding: 10px 22px;
+	border: none;
+	border-radius: 5px;
+	color: var(--white);
+	background-color: var(--lightblue);
+	text-transform: uppercase;
+	cursor: pointer;
+}
+
+.todo-box-list-expense,
+.todo-box-list-income {
+	padding: 20px 0;
+	box-shadow: 4px 4px 5px rgba(82, 82, 82, 0.4);
+	border-left: 1px solid rgba(82, 82, 82, 0.4);
+	border-radius: 0 0 5px 5px;
+}
+
+.todo-box-list-expense h3,
+.todo-box-list-income h3 {
+	text-align: center;
+	text-transform: uppercase;
+	margin-bottom: 16px;
+}
+
+.todo-box-list-expense li,
+.todo-box-list-income li {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin: 15px;
+	padding-left: 20px;
+	text-align: left;
+	list-style: none;
+	background-color: var(--light);
+}
+
+li > p {
+	font-size: 1.2rem;
+}
+
+.tools {
+	display: inline-block;
+}
+
+.tools button {
+	padding: 15px 10px;
+	border: none;
+	background-color: transparent;
+	cursor: pointer;
+}
+
+.edit {
+	font-weight: bold;
+	color: var(--green);
+}
+
+.delete {
+	color: tomato;
+}
+
+.popup {
+	display: none;
+	/* display: flex; */
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	position: fixed;
+	bottom: 30px;
+	left: 50%;
+	transform: translateX(-50%);
+	min-width: 85vw;
+	color: var(--white);
+	background-color: var(--lightblue);
+	border-radius: 5px;
+}
+
+.popup h3 {
+	padding: 20px;
+	font-size: 2.5rem;
+}
+
+.popup-body {
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+	width: 90%;
+	padding: 10px;
+}
+
+.popup-input-text,
+.popup-input-number {
+	width: 100%;
+	padding: 10px 20px;
+	margin: 5px;
+	border: none;
+	border-radius: 5px;
+	color: var(--lightblue);
+	background-color: var(--white);
+}
+
+.popup-btn {
+	width: 30%;
+	display: inline-block;
+	padding: 10px 22px;
+	margin: 20px;
+	border: none;
+	border-radius: 5px;
+	color: var(--blue);
+	background-color: var(--white);
+	text-transform: uppercase;
+	cursor: pointer;
+}
+
+@media screen and (min-width: 768px) {
+	.todo-header {
+		min-width: 400px;
+	}
+}
+
+@media screen and (min-width: 1024px) {
+	.container {
+		width: 960px;
+	}
+
+	.todo {
+		flex-direction: row;
+		justify-content: space-around;
+		height: max-content;
+	}
+
+	.todo-headline {
+		position: relative;
+		width: 100%;
+		margin: 0.75rem;
+	}
+
+	.todo-item {
+		width: 48.5%;
+		margin: 0.5rem;
+	}
+
+	.todo-item-box {
+		position: absolute;
+		top: 20%;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		height: max-content;
+	}
+
+	.todo-box-list-expense,
+	.todo-box-list-income {
+		width: 400px;
+		height: max-content;
+	}
+
+	.popup {
+		min-width: 940px;
+	}
+
+	.popup-body {
+		width: 80%;
+	}
+
+	.popup-btn {
+		width: 120px;
+	}
+}
