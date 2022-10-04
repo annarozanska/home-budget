@@ -59,10 +59,10 @@ const createNewTodoIncome = () => {
 
 		BUDGET.forEach((en, index) => {
 			if (index == BUDGET.length - 1) {
-				if (en.type == 'income') {
+				if(en.type == 'income'){
 					showLi(todoListIncome, en.type, en.title, en.amount, en.id);
 				}
-			}
+			} 
 		});
 
 		updateSum();
@@ -91,7 +91,7 @@ const createNewTodoExpense = () => {
 				if (en.type == 'expense') {
 					showLi(todoListExpense, en.type, en.title, en.amount, en.id);
 				}
-			}
+			} 
 		});
 
 		updateSum();
@@ -167,53 +167,72 @@ const showLi = (todoList, type, title, amount, id) => {
 const deleteOrEditLi = (e) => {
 	if (e.target.matches('.fas')) {
 		let pathLi = e.path[3];
-
 		pathLi.parentNode.removeChild(pathLi);
 		delete BUDGET[pathLi.id];
+
 		updateSum();
 	} else if (e.target.matches('.edit')) {
+		// console.log(e.path[3]);
+		
 		popup.style.display = 'flex';
-
-		popupInputText.value = BUDGET[e.path[2].id].title;
-		popupInputNumber.value = BUDGET[e.path[2].id].amount;
 	}
 };
 
-const deleteOrEditPopup = (e) => {
+const deleteOrEditPopup = (e) => {  
 	if (e.target.matches('.cancel')) {
 		popup.style.display = 'none';
 	} else if (e.target.matches('.accept')) {
-		for (let el of BUDGET) {
-			let text = popupInputText.value;
-			let number = popupInputNumber.value;
-			let index = el.id;
-			let type = el.type;
-			console.log(index);
 
-			if (text !== BUDGET[index].title || number !== BUDGET[index].amount) {
-				BUDGET[index].title = text;
-				BUDGET[index].amount = parseInt(number);
+		BUDGET.forEach((en, index) => {
+			
+			if (index == BUDGET.length - 1) {
+				if (en.type == 'expense') {
+					en.title = popupInputText.value
+					en.amount = parseInt(popupInputNumber.value)
+					// console.log(BUDGET);
 
-				let paragraf = document.getElementById(index).parentElement;
-				console.log(document.getElementById(index).parentElement);
+					const li = todoListExpense.querySelectorAll('li')
+					li.forEach((item) => {
+						if(item.id == en.id){
+							const li = item[item.id]
+							console.log(li);
+							// console.log(item.id)
+							// console.log(en.id)
+							
+							item.innerHTML = `<p>${en.title[0].toUpperCase() + en.title.substring(1)}: ${en.amount} zł</p>
+							<div class="tools">
+								<button id="edit" class="edit">EDIT</button>
+								<button id="delete" class="delete"><i class="fas fa-times"></i></button>
+							</div>`
+						}
+					});
 
-				let changePar = `   
-                    <li id="${index}" class="${type}"> 
-                    <p>${text[0].toUpperCase() + text.substring(1)}: ${number} zł</p>
-                    <div class="tools">
-                        <button id="edit" class="edit">EDIT</button>
-                        <button id="delete" class="delete"><i class="fas fa-times"></i></button>
-                    </div>  
-                    </li>    
-                    `;
+					popupInputText.value =''
+					popupInputNumber.value = ''
+					// console.log(todoListExpense)
+					
+				}else if(en.type == 'income'){
+					en.title = popupInputText.value
+					en.amount = parseInt(popupInputNumber.value)
+					console.log(BUDGET);
+					
+					const li = todoListIncome.querySelectorAll('li')
+					li.forEach((item) => {
+						if(item.id == en.id){
+							console.log(item.firstElementChild);
+							
+							item.firstElementChild.textContent = `${en.title[0].toUpperCase() + en.title.substring(1)}: ${en.amount} zł`
+						}
+					});
+					
+					popupInputText.value =''
+					popupInputNumber.value = ''
 
-				paragraf.innerHTML = changePar;
-			}
-			console.log(BUDGET);
-			// console.log(todoListIncome);
-			// console.log(todoListExpense);
-		}
-
+					// console.log(todoListIncome)
+				}
+			} 
+		});
+		
 		updateSum();
 		popup.style.display = 'none';
 	}
