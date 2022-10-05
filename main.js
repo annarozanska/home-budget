@@ -137,17 +137,13 @@ const updateSum = () => {
 
 	if (income > expense) {
 		balanceTotal.innerHTML = `Możesz jeszcze wydać ${youHave} zł`;
-		incomeTotal.innerHTML = `Suma przychodów: ${income} zł`;
-		expenseTotal.innerHTML = `Suma Wydatków: ${expense} zł`;
 	} else if (income - expense === 0) {
 		balanceTotal.innerHTML = `Bilans wynosi ${youHave} zł`;
-		incomeTotal.innerHTML = `Suma przychodów: ${income} zł`;
-		expenseTotal.innerHTML = `Suma Wydatków: ${expense} zł`;
 	} else {
 		balanceTotal.innerHTML = `Bilans jest ujemny. Jesteś na minusie ${youHave} zł`;
-		incomeTotal.innerHTML = `Suma przychodów: ${income} zł`;
-		expenseTotal.innerHTML = `Suma Wydatków: ${expense} zł`;
 	}
+	incomeTotal.innerHTML = `Suma przychodów: ${income} zł`;
+	expenseTotal.innerHTML = `Suma Wydatków: ${expense} zł`;
 };
 
 const showLi = (todoList, type, title, amount, id) => {
@@ -155,7 +151,7 @@ const showLi = (todoList, type, title, amount, id) => {
             <li id="${id}" class="${type}">
             <p>${title[0].toUpperCase() + title.substring(1)}: ${amount} zł</p>
                 <div class="tools">
-                    <button id="edit" class="edit">EDIT</button>
+                    <button id="edit" data-id="${id}" class="edit">EDIT</button>
                     <button id="delete" class="delete"><i class="fas fa-times"></i></button>
                 </div>
             </li>
@@ -171,10 +167,9 @@ const deleteOrEditLi = (e) => {
 		delete BUDGET[pathLi.id];
 
 		updateSum();
-	} else if (e.target.matches('.edit')) {
-		// console.log(e.path[3]);
-		
+	} else if (e.target.matches('.edit')) {		
 		popup.style.display = 'flex';
+		popup.setAttribute('data-elId', e.target.getAttribute('data-id'))
 	}
 };
 
@@ -185,50 +180,34 @@ const deleteOrEditPopup = (e) => {
 
 		BUDGET.forEach((en, index) => {
 			
-			if (index == BUDGET.length - 1) {
+			if (index === +popup.getAttribute('data-elId')) {
 				if (en.type == 'expense') {
 					en.title = popupInputText.value
 					en.amount = parseInt(popupInputNumber.value)
-					// console.log(BUDGET);
 
 					const li = todoListExpense.querySelectorAll('li')
 					li.forEach((item) => {
 						if(item.id == en.id){
-							const li = item[item.id]
-							console.log(li);
-							// console.log(item.id)
-							// console.log(en.id)
-							
-							item.innerHTML = `<p>${en.title[0].toUpperCase() + en.title.substring(1)}: ${en.amount} zł</p>
-							<div class="tools">
-								<button id="edit" class="edit">EDIT</button>
-								<button id="delete" class="delete"><i class="fas fa-times"></i></button>
-							</div>`
+							item.firstElementChild.textContent = `${en.title[0].toUpperCase() + en.title.substring(1)}: ${en.amount} zł`
 						}
 					});
 
 					popupInputText.value =''
 					popupInputNumber.value = ''
-					// console.log(todoListExpense)
 					
 				}else if(en.type == 'income'){
 					en.title = popupInputText.value
 					en.amount = parseInt(popupInputNumber.value)
-					console.log(BUDGET);
-					
+
 					const li = todoListIncome.querySelectorAll('li')
 					li.forEach((item) => {
 						if(item.id == en.id){
-							console.log(item.firstElementChild);
-							
 							item.firstElementChild.textContent = `${en.title[0].toUpperCase() + en.title.substring(1)}: ${en.amount} zł`
 						}
 					});
 					
 					popupInputText.value =''
 					popupInputNumber.value = ''
-
-					// console.log(todoListIncome)
 				}
 			} 
 		});
