@@ -1,26 +1,26 @@
-let todoInputNameIncome = document.querySelector('.todo-input-name-income');
-let todoInputNumberIncome = document.querySelector('.todo-input-number-income');
-let todoBtnAddIncome = document.querySelector('.btn-add-income');
-let todoListIncome = document.querySelector('.todo-box-list-income ul');
+const todoInputNameIncome = document.querySelector('.todo-input-name-income');
+const todoInputNumberIncome = document.querySelector('.todo-input-number-income');
+const todoBtnAddIncome = document.querySelector('.btn-add-income');
+const todoListIncome = document.querySelector('.todo-box-list-income ul');
 
-let todoInputNameExpense = document.querySelector('.todo-input-name-expense');
-let todoInputNumberExpense = document.querySelector(
+const todoInputNameExpense = document.querySelector('.todo-input-name-expense');
+const todoInputNumberExpense = document.querySelector(
 	'.todo-input-number-expense'
 );
-let todoBtnAddExpense = document.querySelector('.btn-add-expense');
-let todoListExpense = document.querySelector('.todo-box-list-expense ul');
+const todoBtnAddExpense = document.querySelector('.btn-add-expense');
+const todoListExpense = document.querySelector('.todo-box-list-expense ul');
 
-let ulList = document.querySelectorAll('.list');
+const ulList = document.querySelectorAll('.list');
 
-let balanceTotal = document.querySelector('.balance-total');
-let incomeTotal = document.querySelector('.income-total');
-let expenseTotal = document.querySelector('.expense-total');
+const balanceTotal = document.querySelector('.balance-total');
+const incomeTotal = document.querySelector('.income-total');
+const expenseTotal = document.querySelector('.expense-total');
 
-let popup = document.querySelector('.popup');
-let popupInputText = document.querySelector('.popup-input-text');
-let popupInputNumber = document.querySelector('.popup-input-number');
-let popupBtnAdd = document.querySelector('.accept');
-let popupBtnRemove = document.querySelector('.cancel');
+const popup = document.querySelector('.popup');
+const popupInputText = document.querySelector('.popup-input-text');
+const popupInputNumber = document.querySelector('.popup-input-number');
+const popupBtnAdd = document.querySelector('.accept');
+const popupBtnRemove = document.querySelector('.cancel');
 
 const DOMEvents = () => {
 	todoBtnAddIncome.addEventListener('click', createNewTodoIncome);
@@ -59,10 +59,10 @@ const createNewTodoIncome = () => {
 
 		BUDGET.forEach((en, index) => {
 			if (index == BUDGET.length - 1) {
-				if(en.type == 'income'){
+				if (en.type == 'income') {
 					showLi(todoListIncome, en.type, en.title, en.amount, en.id);
 				}
-			} 
+			}
 		});
 
 		updateSum();
@@ -91,7 +91,7 @@ const createNewTodoExpense = () => {
 				if (en.type == 'expense') {
 					showLi(todoListExpense, en.type, en.title, en.amount, en.id);
 				}
-			} 
+			}
 		});
 
 		updateSum();
@@ -167,51 +167,52 @@ const deleteOrEditLi = (e) => {
 		delete BUDGET[pathLi.id];
 
 		updateSum();
-	} else if (e.target.matches('.edit')) {		
+	} else if (e.target.matches('.edit')) {
 		popup.style.display = 'flex';
-		popup.setAttribute('data-elId', e.target.getAttribute('data-id'))
+		popup.setAttribute('data-elId', e.target.getAttribute('data-id'));
 	}
 };
 
-const deleteOrEditPopup = (e) => {  
+const deleteOrEditPopup = (e) => {
 	if (e.target.matches('.cancel')) {
 		popup.style.display = 'none';
 	} else if (e.target.matches('.accept')) {
-
 		BUDGET.forEach((en, index) => {
-			
 			if (index === +popup.getAttribute('data-elId')) {
 				if (en.type == 'expense') {
-					en.title = popupInputText.value
-					en.amount = parseInt(popupInputNumber.value)
+					en.title = popupInputText.value;
+					en.amount = parseInt(popupInputNumber.value);
 
-					const li = todoListExpense.querySelectorAll('li')
+					const li = todoListExpense.querySelectorAll('li');
 					li.forEach((item) => {
-						if(item.id == en.id){
-							item.firstElementChild.textContent = `${en.title[0].toUpperCase() + en.title.substring(1)}: ${en.amount} zł`
+						if (item.id == en.id) {
+							item.firstElementChild.textContent = `${
+								en.title[0].toUpperCase() + en.title.substring(1)
+							}: ${en.amount} zł`;
 						}
 					});
 
-					popupInputText.value =''
-					popupInputNumber.value = ''
-					
-				}else if(en.type == 'income'){
-					en.title = popupInputText.value
-					en.amount = parseInt(popupInputNumber.value)
+					popupInputText.value = '';
+					popupInputNumber.value = '';
+				} else if (en.type == 'income') {
+					en.title = popupInputText.value;
+					en.amount = parseInt(popupInputNumber.value);
 
-					const li = todoListIncome.querySelectorAll('li')
+					const li = todoListIncome.querySelectorAll('li');
 					li.forEach((item) => {
-						if(item.id == en.id){
-							item.firstElementChild.textContent = `${en.title[0].toUpperCase() + en.title.substring(1)}: ${en.amount} zł`
+						if (item.id == en.id) {
+							item.firstElementChild.textContent = `${
+								en.title[0].toUpperCase() + en.title.substring(1)
+							}: ${en.amount} zł`;
 						}
 					});
-					
-					popupInputText.value =''
-					popupInputNumber.value = ''
+
+					popupInputText.value = '';
+					popupInputNumber.value = '';
 				}
-			} 
+			}
 		});
-		
+
 		updateSum();
 		popup.style.display = 'none';
 	}
